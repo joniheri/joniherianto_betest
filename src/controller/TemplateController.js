@@ -5,6 +5,10 @@ const template = async (req, res) => {
       message: `Success`,
     });
   } catch (error) {
-    return console.log(error);
+    console.log(error);
+    return res.status(500).send({
+      status: 'Error catch',
+      message: error.message,
+    });
   }
 };

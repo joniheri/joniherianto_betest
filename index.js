@@ -3,7 +3,11 @@ const app = express();
 const port = 3001;
 const cors = require('cors');
 require('dotenv').config();
-const routerV1 = require('./src/routes/RouterV1');
+
+app.use(express.json());
+
+const { ConnectDBLocal, ConnectDBOnline } = require('./config/db');
+ConnectDBOnline();
 
 const whitelist = ['http://localhost:5174', 'http://example2.com'];
 const corsOptions = {
@@ -15,10 +19,10 @@ const corsOptions = {
     }
   },
 };
-
-app.use(express.json());
 // app.use(cors(corsOptions));
 app.use(cors());
+
+const routerV1 = require('./src/routes/RouterV1');
 app.use('/api', routerV1);
 
 app.get('/', (_, res) => {
