@@ -1,10 +1,7 @@
 const joi = require('joi');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const {
-  users: userDummies,
-  userData: userDataDummies,
-} = require('../data/DataDummies');
+const { user: UserModel } = require('../models/UserModel');
 
 const login = async (req, res) => {
   try {
@@ -25,9 +22,9 @@ const login = async (req, res) => {
     // End ValidationInput
 
     // Chec username already exist
-    const userByUsername = userDataDummies.find(
-      (item) => item.userName.toLowerCase() === dataInput.userName
-    );
+    const userByUsername = await UserModel.findOne({
+      userName: dataInput.userName,
+    });
     if (!userByUsername) {
       return res.status(400).send({
         status: 'fail',
