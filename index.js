@@ -7,7 +7,7 @@ require('dotenv').config();
 app.use(express.json());
 
 const { ConnectDBLocal, ConnectDBOnline } = require('./config/db');
-ConnectDBLocal();
+ConnectDBOnline();
 
 const whitelist = ['http://localhost:5174', 'http://example2.com'];
 const corsOptions = {
